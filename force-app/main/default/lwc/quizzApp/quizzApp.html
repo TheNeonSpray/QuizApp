@@ -1,0 +1,52 @@
+<template>
+    <lightning-card title="Welcome To The Quizz">
+        <div class="slds-m-around_medium">
+            <form>
+                <template for:each={myQuestions} for:item="quiz">
+                    <div key={quiz.id} class="slds-m-around_medium">
+                        <div>
+                            <strong>
+                                {quiz.id}. {quiz.question}
+                            </strong>
+                        </div>
+                        <div class="slds-grid slds-gutters slds-p-around_medium">
+                            <div class="slds-col">
+                                <input type="radio" name={quiz.id} value="a" onchange={changeHandler} />
+                                {quiz.options.a}
+                            </div>
+                            <div class="slds-col">
+                                <input type="radio" name={quiz.id} value="b" onchange={changeHandler} />
+                                {quiz.options.b}
+                            </div>
+                            <div class="slds-col">
+                                <input type="radio" name={quiz.id} value="c" onchange={changeHandler} />
+                                {quiz.options.c}
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                <div class="slds-grid slds-grid_align-end">
+                    <div class="slds-col">
+                        <lightning-button variant="destructive" type="reset" label="Reset" title="Reset Quizz"
+                            onclick={resetHandler} class="slds-m-around_small"></lightning-button>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-button variant="success" type="submit" label="Submit" title="Submit Quizz"
+                            onclick={submitHandler} disabled={allNotSelected} class="slds-m-around_small">
+                        </lightning-button>
+                    </div>
+                </div>
+            </form>
+            <template if:true={isSubmitted}>
+                <div class="slds-notify_container slds-is-relative">
+                    <div class={isScoredFull} role="status">
+                        <div class="slds-notify__content">
+                            <h2 class="slds-text-heading_large">You have scored {correctAnswers} out of
+                                {myQuestions.length}.</h2>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
